@@ -199,35 +199,87 @@
       color: white;
     }
 
+    
     .photo-wrap {
-      display: flex;
-      justify-content: center;
       position: relative;
+      width: min(320px, 85%);
+      aspect-ratio: 4 / 5;
+      margin: 0 auto;
+      isolation: isolate;
     }
 
-    .photo-decoration {
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: var(--teal-light);
+    .photo-wrap::before {
+      content: "";
       position: absolute;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-45%);
+      z-index: -2;
+      inset: -12%;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(20, 184, 166, 0.35),
+        rgba(30, 58, 95, 0.12) 55%,
+        transparent 75%
+      );
+      filter: blur(20px);
+      pointer-events: none;
     }
 
     .profile-photo {
       position: relative;
       z-index: 1;
-      width: 280px;
-      height: 320px;
+      display: block;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      object-position: center;
-      border-radius: 24px;
-      border: 6px solid white;
-      outline: 2px solid var(--teal);
-      box-shadow: var(--shadow);
+      object-position: center top;
+      border-radius: 22px;
+      border: 5px solid white;
+      box-shadow: 0 12px 35px rgba(27, 54, 93, 0.18);
       animation: photoAppear 0.9s ease both;
+    }
+
+    .photo-ring {
+      position: absolute;
+      z-index: 2;
+      inset: -13px;
+      border: 3px solid transparent;
+      border-top-color: var(--teal);
+      border-right-color: #14B8A6;
+      border-radius: 30px;
+      transform: rotate(-7deg);
+      pointer-events: none;
+    }
+
+    .badge {
+      position: absolute;
+      z-index: 3;
+      background: white;
+      color: var(--navy);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 8px 13px;
+      border-radius: 999px;
+      border: 1px solid #D5DEE8;
+      box-shadow: 0 6px 16px rgba(27, 54, 93, 0.15);
+      white-space: nowrap;
+      animation: badgeFloat 4s ease-in-out infinite;
+    }
+
+    .b1 {
+      top: 10%;
+      right: -12%;
+    }
+
+    .b2 {
+      top: 47%;
+      right: -18%;
+      animation-delay: 0.5s;
+    }
+
+    .b3 {
+      bottom: 10%;
+      left: -12%;
+      animation-delay: 1s;
     }
 
     @keyframes photoAppear {
@@ -240,6 +292,16 @@
         transform: translateY(0) scale(1);
       }
     }
+
+    @keyframes badgeFloat {
+      0%, 100% {
+        translate: 0 0;
+      }
+      50% {
+        translate: 0 -5px;
+      }
+    }
+
 
     /* Common sections */
 
