@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -199,103 +198,47 @@
       color: white;
     }
 
-    
     .photo-wrap {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  margin: 0 auto;
-  border-radius: 50%;
-  isolation: isolate;
-}
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
 
-.photo-wrap::before {
-  content: "";
-  position: absolute;
-  inset: -15px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(20, 184, 166, 0.35),
-    rgba(30, 58, 95, 0.12) 65%,
-    transparent 75%
-  );
-  filter: blur(18px);
-  z-index: -1;
-}
+    .photo-decoration {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: var(--teal-light);
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-45%);
+    }
 
-.profile-photo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 50%;
-  border: none;
-  outline: none;
-  box-shadow: 0 10px 30px rgba(27, 54, 93, 0.18);
-  animation: photoAppear 0.9s ease both;
-}
+    .profile-photo {
+      position: relative;
+      z-index: 1;
+      width: 280px;
+      height: 280px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
+      border: 6px solid white;
+      outline: 2px solid var(--teal);
+      box-shadow: var(--shadow);
+      animation: photoAppear 0.9s ease both;
+    }
 
-.photo-ring {
-  position: absolute;
-  inset: -8px;
-  border: 2px solid var(--teal);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.badge {
-  position: absolute;
-  z-index: 3;
-  background: white;
-  color: var(--navy);
-  font-size: 0.82rem;
-  font-weight: 700;
-  padding: 8px 13px;
-  border-radius: 999px;
-  border: 1px solid #D5DEE8;
-  box-shadow: 0 6px 16px rgba(27, 54, 93, 0.15);
-  white-space: nowrap;
-  animation: badgeFloat 4s ease-in-out infinite;
-}
-
-.b1 {
-  top: 10%;
-  right: -12%;
-}
-
-.b2 {
-  top: 47%;
-  right: -18%;
-  animation-delay: 0.5s;
-}
-
-.b3 {
-  bottom: 10%;
-  left: -12%;
-  animation-delay: 1s;
-}
-
-@keyframes photoAppear {
-  from {
-    opacity: 0;
-    transform: translateY(18px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes badgeFloat {
-  0%, 100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 -5px;
-  }
-}
+    @keyframes photoAppear {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
 
     /* Common sections */
 
@@ -417,6 +360,12 @@
       box-shadow: 0 14px 32px rgba(27, 54, 93, 0.12);
     }
 
+    /* Featured (full-width) project card */
+
+    .project-card.featured {
+      grid-column: 1 / -1;
+    }
+
     .project-top {
       display: flex;
       justify-content: space-between;
@@ -487,6 +436,105 @@
 
     .project-link:hover {
       text-decoration: underline;
+    }
+
+    /* Project screenshot gallery */
+
+    .gallery-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin: 6px 0 12px;
+      width: 100%;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+      width: 100%;
+      margin-bottom: 22px;
+    }
+
+    .gallery figure {
+      grid-column: span 2;
+      margin: 0;
+      background: #F7F9FC;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: zoom-in;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .gallery figure:nth-child(n+4) {
+      grid-column: span 3;
+    }
+
+    .gallery figure:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .gallery img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      object-position: top center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .gallery figcaption {
+      padding: 10px 14px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+
+    .gallery figcaption small {
+      display: block;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Image viewer (opens when a screenshot is clicked) */
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(10, 20, 38, 0.88);
+      cursor: zoom-out;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 16px;
+      right: 22px;
+      color: white;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
     }
 
     /* Education and experience */
@@ -708,24 +756,16 @@
       .photo-wrap {
         grid-row: 1;
       }
-      
-      .photo-wrap {
-  grid-row: 1;
-  width: 240px;
-  height: 240px;
-}
 
-.b1 {
-  right: -8%;
-}
+      .profile-photo {
+        width: 220px;
+        height: 220px;
+      }
 
-.b2 {
-  right: -12%;
-}
-
-.b3 {
-  left: -8%;
-}
+      .photo-decoration {
+        width: 235px;
+        height: 235px;
+      }
 
       .skills-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -734,6 +774,19 @@
       .projects-grid,
       .cert-grid {
         grid-template-columns: 1fr;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery figure,
+      .gallery figure:nth-child(n+4) {
+        grid-column: span 1;
+      }
+
+      .gallery figure:first-child {
+        grid-column: span 2;
       }
     }
 
@@ -763,6 +816,16 @@
 
       .hero h1 {
         letter-spacing: -0.7px;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery figure,
+      .gallery figure:first-child,
+      .gallery figure:nth-child(n+4) {
+        grid-column: span 1;
       }
     }
   </style>
@@ -811,21 +874,16 @@
           </div>
         </div>
 
-       
         <div class="photo-wrap">
-          <div class="photo-ring" aria-hidden="true"></div>
+          <div class="photo-decoration" aria-hidden="true"></div>
 
           <img
             src="profile.jpeg"
             alt="Aruna M. - Aspiring Data Analyst"
             class="profile-photo"
-            width="320"
-            height="400"
+            width="280"
+            height="280"
           >
-
-          <span class="badge b1">SQL</span>
-          <span class="badge b2">Power BI</span>
-          <span class="badge b3">Python</span>
         </div>
 
       </div>
@@ -945,7 +1003,8 @@
 
         <div class="projects-grid">
 
-          <article class="project-card reveal">
+          <!-- PROJECT 01: InvoiceIQ (full width with screenshots) -->
+          <article class="project-card featured reveal">
             <div class="project-top">
               <span class="project-number">PROJECT 01</span>
               <span class="status">In Progress</span>
@@ -959,10 +1018,77 @@
               confidence-based review, and expense categorization.
             </p>
 
+            <!-- Screenshots: save these 5 images inside an "images" folder -->
+            <p class="gallery-title">Project Screenshots (click to enlarge)</p>
+
+            <div class="gallery">
+
+              <figure>
+                <img
+                  src="images/project1.png"
+                  alt="InvoiceIQ side-by-side inspection screen showing the original receipt and extracted header fields with confidence scores"
+                  loading="lazy"
+                >
+                <figcaption>
+                  Side-by-Side Inspection
+                  <small>Original receipt next to extracted fields with confidence scores and audit checks.</small>
+                </figcaption>
+              </figure>
+
+              <figure>
+                <img
+                  src="images/project2.png"
+                  alt="InvoiceIQ itemized line items table with an editable math editor and commit button"
+                  loading="lazy"
+                >
+                <figcaption>
+                  Line Items &amp; Review
+                  <small>Editable line-item table with confirm and export options.</small>
+                </figcaption>
+              </figure>
+
+              <figure>
+                <img
+                  src="images/project3.png"
+                  alt="InvoiceIQ spend analytics dashboard with category donut chart and top suppliers bar chart"
+                  loading="lazy"
+                >
+                <figcaption>
+                  Spend Analytics
+                  <small>Spend by category and top suppliers across the saved invoices.</small>
+                </figcaption>
+              </figure>
+
+              <figure>
+                <img
+                  src="images/project4.png"
+                  alt="InvoiceIQ dataset ingestion audit log table with confidence and status columns"
+                  loading="lazy"
+                >
+                <figcaption>
+                  Ingestion Audit Log
+                  <small>Every processed invoice with its confidence score and review status.</small>
+                </figcaption>
+              </figure>
+
+              <figure>
+                <img
+                  src="images/project5.png"
+                  alt="InvoiceIQ conversational chat answering a spend question about groceries and food supplies"
+                  loading="lazy"
+                >
+                <figcaption>
+                  Chat with Invoices
+                  <small>Ask questions in plain language and get answers from the invoice data.</small>
+                </figcaption>
+              </figure>
+
+            </div>
+
             <div class="tag-list">
               <span class="tag">Python</span>
               <span class="tag">Streamlit</span>
-              <span class="tag">Multimodal AI</span>
+              <span class="tag">MultimodalVLM</span>
               <span class="tag">Data Processing</span>
             </div>
 
@@ -1199,6 +1325,12 @@
     <p>Designed with a focus on data, clarity, and continuous learning.</p>
   </footer>
 
+  <!-- Screenshot viewer -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Screenshot viewer" aria-hidden="true">
+    <span class="lightbox-close" aria-hidden="true">&times;</span>
+    <img src="" alt="">
+  </div>
+
   <script>
     // Automatically update the copyright year.
     document.getElementById("current-year").textContent =
@@ -1230,6 +1362,33 @@
         element.classList.add("visible");
       });
     }
+
+    // Click a project screenshot to view it full size.
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = lightbox.querySelector("img");
+
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImg.src = "";
+    }
+
+    document.querySelectorAll(".gallery img").forEach((img) => {
+      img.addEventListener("click", () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+      });
+    });
+
+    lightbox.addEventListener("click", closeLightbox);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+    });
   </script>
 
 </body>
